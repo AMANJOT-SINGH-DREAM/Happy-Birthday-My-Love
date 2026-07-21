@@ -516,12 +516,12 @@ GALLERY IMAGES
 
 const galleryImages = [
 
-"images/sl-1.jpg",
-"images/sl-2.jpg",
-"images/sl-8.jpeg",
-"images/sl-4.jpg",
-"images/sl-7.jpg",
-"images/sl-5.jpg"
+"sl-1.jpg",
+"sl-2.jpg",
+"sl-8.jpeg",
+"sl-4.jpg",
+"sl-7.jpg",
+"sl-5.jpg"
 
 ];
 
