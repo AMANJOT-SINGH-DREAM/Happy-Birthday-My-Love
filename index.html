@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ramanpreet Kaur — 21st Birthday Celebration</title>
+<meta name="description" content="You're invited — Ramanpreet Kaur turns 21. Join us at Kakarwal.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NOISE + GRAIN OVERLAY ============ -->
+<div class="grain-overlay"></div>
+
+<!-- ============ CUSTOM CURSOR ============ -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ============ LOADING SCREEN ============ -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <svg class="loader-monogram" viewBox="0 0 200 200" width="110" height="110">
+      <circle class="loader-ring" cx="100" cy="100" r="86" fill="none" stroke="url(#loaderGrad)" stroke-width="1.5"/>
+      <defs>
+        <linearGradient id="loaderGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#D4AF37"/>
+          <stop offset="100%" stop-color="#FF8FA3"/>
+        </linearGradient>
+      </defs>
+      <text x="100" y="96" text-anchor="middle" class="loader-letters">R&amp;K</text>
+      <text x="100" y="122" text-anchor="middle" class="loader-sub">EST. 22.07.2005</text>
+    </svg>
+    <div class="loader-cake" aria-hidden="true">
+      <div class="loader-flame"></div>
+      <div class="loader-candle"></div>
+      <div class="loader-tier loader-tier--top"></div>
+      <div class="loader-tier loader-tier--bottom"></div>
+    </div>
+    <p class="loader-caption">preparing something beautiful<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+  </div>
+  <div class="loader-progress"><div class="loader-progress-bar" id="loaderBar"></div></div>
+</div>
+
+<!-- ============ PARTICLE / EFFECTS CANVAS (site-wide ambience) ============ -->
+<canvas id="fxCanvas" class="fx-canvas"></canvas>
+
+<!-- ============ MUSIC BUTTON ============ -->
+<button class="music-btn" id="musicBtn" aria-label="Play background music" aria-pressed="false">
+  <span class="music-bars"><i></i><i></i><i></i><i></i></span>
+</button>
+<audio id="bgMusic" loop preload="none">
+  <source src="Dildarian - Kambi Rajpuria.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ============ SCROLL PROGRESS ============ -->
+<div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+
+<!-- ============ WELCOME / GIFT SCREEN ============ -->
+<section class="welcome" id="welcome">
+  <div class="welcome-bg">
+    <div class="glow glow--1"></div>
+    <div class="glow glow--2"></div>
+    <div class="petals" id="petalsWelcome"></div>
+  </div>
+
+  <p class="welcome-eyebrow">an invitation, with love</p>
+  <h1 class="welcome-name">Ramanpreet Kaur</h1>
+  <p class="welcome-sub">turns twenty-one on the 22nd of July</p>
+
+  <button class="gift" id="giftBox" aria-label="Tap to open your invitation">
+    <span class="gift-glow"></span>
+    <svg class="gift-svg" viewBox="0 0 240 240" width="180" height="180">
+      <g id="giftLid" class="gift-lid">
+        <rect x="30" y="70" width="180" height="34" rx="6" fill="url(#lidGrad)"/>
+        <rect x="108" y="70" width="24" height="34" fill="#D4AF37"/>
+        <path class="bow" d="M120 70 C90 40, 60 40, 70 62 C80 82, 110 74, 120 70 C130 74, 160 82, 170 62 C180 40, 150 40, 120 70 Z" fill="#D4AF37"/>
+      </g>
+      <g id="giftBase" class="gift-base">
+        <rect x="38" y="104" width="164" height="112" rx="4" fill="url(#boxGrad)"/>
+        <rect x="108" y="104" width="24" height="112" fill="#D4AF37" opacity="0.85"/>
+      </g>
+      <defs>
+        <linearGradient id="lidGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#8E1B3A"/>
+          <stop offset="100%" stop-color="#4B0714"/>
+        </linearGradient>
+        <linearGradient id="boxGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6B0F1A"/>
+          <stop offset="100%" stop-color="#3A0519"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="gift-label">tap to open</span>
+  </button>
+
+  <div class="scroll-cue" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- ============ INTRO CINEMATIC (post gift-open) ============ -->
+<section class="cinematic" id="cinematic">
+  <video class="cinematic-video" id="introVideo" muted playsinline>
+    <source src="images/intro.jpg" type="video/mp4">
+  </video>
+  <div class="cinematic-overlay"></div>
+  <div class="cinematic-content">
+    <p class="cinematic-kicker">happy birthday</p>
+    <h2 class="cinematic-title">Ramanpreet Kaur</h2>
+    <p class="cinematic-age">twenty&nbsp;&mdash;&nbsp;<span>one</span></p>
+  </div>
+  <button class="cinematic-skip" id="skipIntro">Skip &rarr;</button>
+</section>
+
+<!-- ============ MAIN SITE ============ -->
+<main id="mainSite" class="main-site">
+
+  <!-- NAV -->
+  <nav class="nav" id="siteNav">
+    <span class="nav-mark">R&amp;K</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#timeline">Memories</a></li>
+      <li><a href="#wishes">Wishes</a></li>
+      <li><a href="#event">Event</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-petals" id="heroPetals"></div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">22 . 07 . 2026 &nbsp;•&nbsp; Kakarwal</p>
+        <h1 class="hero-title">
+          <span class="reveal-line"><span class="reveal">Happy</span></span>
+          <span class="reveal-line"><span class="reveal">Birthday</span></span>
+          <span class="reveal-line "><span class="reveal">My Love</span></span>
+        </h1>
+        <p class="hero-desc reveal">Twenty-one candles, a lifetime of love. Come celebrate an evening woven in red, gold and mehroon — for the girl who makes every room feel like home.</p>
+        <div class="hero-cta-row reveal">
+          <a href="#event" class="btn btn--primary">Save the Date</a>
+          <a href="#wishes" class="btn btn--ghost">Send a Wish</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-frame">
+          <img src="images/one.jpg" alt="Ramanpreet Kaur" loading="lazy">
+          <div class="hero-frame-ring"></div>
+        </div>
+        <div class="hero-cake" aria-hidden="true">
+          <div class="cake-flame"></div>
+          <div class="cake-candle"></div>
+          <div class="cake-tier cake-tier--1"></div>
+          <div class="cake-tier cake-tier--2"></div>
+          <div class="cake-tier cake-tier--3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint reveal">scroll to unwrap the story<span>↓</span></div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="countdown-section">
+    <p class="section-eyebrow reveal">counting down to</p>
+    <h2 class="section-title reveal">The Celebration</h2>
+    <div class="countdown reveal" id="countdown">
+      <div class="cd-unit"><span class="cd-num" id="cdDays">00</span><span class="cd-label">Days</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-label">Hours</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdMins">00</span><span class="cd-label">Minutes</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdSecs">00</span><span class="cd-label">Seconds</span></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-frame">
+          <img src="images/four.jpg" alt="About Ramanpreet" loading="lazy">
+        </div>
+        <div class="about-tag">Est. 2005 · Kakarwal</div>
+      </div>
+      <div class="about-copy">
+        <p class="section-eyebrow reveal">the birthday girl</p>
+        <h2 class="section-title reveal">About Ramanpreet</h2>
+        <p class="about-text reveal">Warm-hearted, quietly fierce, and endlessly loved — Ramanpreet carries her home town of Kakarwal in her laugh and her love for the people around her in everything she does. Twenty-one looks good on her.</p>
+        <div class="about-cards">
+          <div class="about-card reveal">
+            <span class="about-card-icon">♡</span>
+            <h3>Favourite Colour</h3>
+            <p>Red — bold, warm, unmistakably her.</p>
+          </div>
+          <div class="about-card reveal">
+            <span class="about-card-icon">♫</span>
+            <h3>Anthem</h3>
+            <p>"Dildariyan" by Kambi, on repeat.</p>
+          </div>
+          <div class="about-card reveal">
+            <span class="about-card-icon">✦</span>
+            <h3>Dream</h3>
+            <p>A life full of love, laughter, and long drives home.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <p class="section-eyebrow reveal center">a few favourite frames</p>
+    <h2 class="section-title reveal center">Photo Gallery</h2>
+    <div class="carousel" id="carousel">
+      <button class="carousel-arrow carousel-arrow--left" id="carLeft" aria-label="Previous photo">&#8592;</button>
+      <div class="carousel-track" id="carouselTrack">
+        <!-- slides injected by JS -->
+      </div>
+      <button class="carousel-arrow carousel-arrow--right" id="carRight" aria-label="Next photo">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <!-- MEMORIES TIMELINE -->
+  <section class="timeline-section" id="timeline">
+    <p class="section-eyebrow reveal center">a journey of love</p>
+    <h2 class="section-title reveal center">Memories Timeline</h2>
+    <div class="timeline" id="timelineList">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">2005</span>
+          <h3>A New Beginning</h3>
+          <p>Born in Kakarwal, welcomed with open arms and endless love.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">School Days</span>
+          <h3>First Steps, First Friends</h3>
+          <p>Giggles in the classroom and friendships that still hold strong.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">College</span>
+          <h3>Finding Her Voice</h3>
+          <p>Bigger dreams, braver choices, and a growing sense of self.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">Friends &amp; Family</span>
+          <h3>The People Who Matter</h3>
+          <p>Every celebration, every ordinary evening, made golden by good company.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">Today</span>
+          <h3>Twenty-One</h3>
+          <p>A new chapter begins — surrounded by love, in Kakarwal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUN FACTS -->
+  <section class="funfacts" id="funfacts">
+    <p class="section-eyebrow reveal center">get to know her</p>
+    <h2 class="section-title reveal center">Fun Facts</h2>
+    <div class="flip-grid">
+      <div class="flip-card reveal">
+        <div class="flip-inner">
+          <div class="flip-front"><span>🎨</span><h3>Favourite Colour</h3></div>
+          <div class="flip-back"><p>Red</p></div>
+        </div>
+      </div>
+      <div class="flip-card reveal">
+        <div class="flip-inner">
+          <div class="flip-front"><span>🎵</span><h3>Favourite Song</h3></div>
+          <div class="flip-back"><p>Dildariyan — Kambi</p></div>
+        </div>
+      </div>
+      <div class="flip-card reveal">
+        <div class="flip-inner">
+          <div class="flip-front"><span>📍</span><h3>Home</h3></div>
+          <div class="flip-back"><p>Kakarwal</p></div>
+        </div>
+      </div>
+      <div class="flip-card reveal">
+        <div class="flip-inner">
+          <div class="flip-front"><span>💫</span><h3>Theme of Life</h3></div>
+          <div class="flip-back"><p>Love, always</p></div>
+        </div>
+      </div>
+      <div class="flip-card reveal">
+        <div class="flip-inner">
+          <div class="flip-front"><span>🎂</span><h3>Turning</h3></div>
+          <div class="flip-back"><p>21 years young</p></div>
+        </div>
+      </div>
+      <div class="flip-card reveal">
+        <div class="flip-inner">
+          <div class="flip-front"><span>📸</span><h3>Find Her</h3></div>
+          <div class="flip-back"><p>@rehmat____104</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WISHES -->
+  <section class="wishes" id="wishes">
+    <p class="section-eyebrow reveal center">for the birthday girl</p>
+    <h2 class="section-title reveal center">Leave a Wish</h2>
+    <form class="wish-form reveal" id="wishForm">
+      <input type="text" id="wishName" placeholder="Your name" required maxlength="40">
+      <textarea id="wishMessage" placeholder="Write your birthday wish for Ramanpreet..." required maxlength="240" rows="3"></textarea>
+      <button type="submit" class="btn btn--primary">Send Wish</button>
+    </form>
+    <div class="wish-slider-wrap reveal">
+      <div class="wish-slider" id="wishSlider"></div>
+    </div>
+  </section>
+
+  <!-- SURPRISE -->
+  <section class="surprise" id="surprise">
+    <p class="section-eyebrow reveal center">one more thing</p>
+    <h2 class="section-title reveal center">Ready for a Surprise?</h2>
+    <button class="surprise-btn reveal" id="surpriseBtn">Click for a Surprise 🎉</button>
+    <p class="surprise-message" id="surpriseMessage"></p>
+  </section>
+
+  <!-- EVENT DETAILS -->
+  <section class="event" id="event">
+    <p class="section-eyebrow reveal center">the details</p>
+    <h2 class="section-title reveal center">Event Details</h2>
+    <div class="event-cards">
+      <div class="event-card reveal">
+        <span class="event-icon">📅</span>
+        <h3>Date</h3>
+        <p>22nd July 2026</p>
+      </div>
+      <div class="event-card reveal">
+        <span class="event-icon">⏰</span>
+        <h3>Time</h3>
+        <p>Evening — details to follow</p>
+      </div>
+      <div class="event-card reveal">
+        <span class="event-icon">📍</span>
+        <h3>Venue</h3>
+        <p>Kakarwal</p>
+      </div>
+      <div class="event-card reveal">
+        <span class="event-icon">👗</span>
+        <h3>Dress Code</h3>
+        <p>Shades of Red &amp; Mehroon</p>
+      </div>
+      <div class="event-card reveal">
+        <span class="event-icon">✉️</span>
+        <h3>RSVP</h3>
+        <p>Kindly confirm via WhatsApp</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="map-section" id="map">
+    <p class="section-eyebrow reveal center">find us here</p>
+    <h2 class="section-title reveal center">Venue &amp; Directions</h2>
+    <div class="map-card reveal">
+      <div class="map-embed">
+        <iframe
+          title="Venue map — Kakarwal"
+          src="https://maps.google.com/maps?q=Kakarwal&z=13&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <div class="map-info">
+        <h3>Kakarwal</h3>
+        <p>We can't wait to celebrate with you here.</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Kakarwal" target="_blank" rel="noopener" class="btn btn--primary">Get Directions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <p class="section-eyebrow reveal center">any questions?</p>
+    <h2 class="section-title reveal center">Contact the Host</h2>
+    <div class="contact-card reveal">
+      <a class="contact-link" href="https://wa.me/916239643522" target="_blank" rel="noopener">
+        <span class="contact-icon">💬</span> WhatsApp
+      </a>
+      <a class="contact-link" href="https://instagram.com/rehmat____104" target="_blank" rel="noopener">
+        <span class="contact-icon">📷</span> Instagram
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-hearts" aria-hidden="true">♥ ♥ ♥</div>
+    <p class="footer-thanks">Thank you for being part of her story.</p>
+    <p class="footer-name">Happy Birthday, Ramanpreet Kaur</p>
+    <p class="footer-love">With all our love — see you in Kakarwal, 22 July.</p>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
